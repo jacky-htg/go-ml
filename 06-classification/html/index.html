@@ -1,0 +1,53 @@
+<html>
+    <body>
+        <form>
+            <div>
+                <label>Sepal Length</label>
+                <input id="sepalLength" name="sepalLength"/>
+            </div>
+            <div>
+                <label>Sepal Width</label>
+                <input id="sepalWidth" name="sepalWidth"/>
+            </div>
+            <div>
+                <label>Petal Length</label>
+                <input id="petalLength" name="petalLength"/>
+            </div>
+            <div>
+                <label>Petal Width</label>
+                <input id="petalWidth" name="petalWidth"/>
+            </div>
+            <button type="button" onclick="getClass()">Submit</button>
+        </form>
+
+        <script>
+            function getClass() {
+                let sepalLength = document.getElementById("sepalLength").value;
+                let sepalWidth = document.getElementById("sepalWidth").value;
+                let petalLength = document.getElementById("petalLength").value;
+                let petalWidth = document.getElementById("petalWidth").value;
+                if (sepalLength.length > 0 && sepalWidth.length >0 && petalLength.length >0 && petalWidth.length > 0) {
+                    var payload = [
+                        {
+                            "SepalLength": parseFloat(sepalLength),
+                            "SepalWidth": parseFloat(sepalWidth),
+                            "PetalLength": parseFloat(petalLength),
+                            "PetalWidth": parseFloat(petalWidth)
+                        }
+                    ];
+                    callApi(payload);
+                }
+            }
+
+            function callApi(payload) {
+                fetch("http://korma.rijalasepnugroho.com/get-iris-class",
+                {
+                    method: "POST",
+                    body: JSON.stringify( payload )
+                })
+                .then(function(res){ return res.json(); })
+                .then(function(data){ alert(data[0].Species) })
+            }
+        </script>
+    </body>
+</html>
